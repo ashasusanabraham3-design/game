@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Leaderboard</title>
+
+<style>
+body{
+background:black;
+color:white;
+font-family:Arial;
+text-align:center;
+}
+
+h1{
+color:#00ffff;
+margin-top:50px;
+}
+
+#list{
+margin-top:30px;
+font-size:22px;
+}
+
+button{
+margin-top:40px;
+padding:15px 30px;
+font-size:20px;
+border:none;
+border-radius:10px;
+background:#00ffff;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🏆 TOP 10 PLAYERS</h1>
+
+<div id="list"></div>
+
+<button onclick="goBack()">⬅ Back</button>
+
+<script>
+
+function loadLeaderboard(){
+
+fetch("/get_scores")
+.then(res => res.json())
+.then(data => {
+
+    let list = "";
+
+    data.forEach((p, i) => {
+        list += (i+1) + ". " + p.player + " - " + p.score + "<br>";
+    });
+
+    document.getElementById("list").innerHTML = list;
+});
+}
+
+function goBack(){
+window.location.href = "/game";
+}
+
+loadLeaderboard();
+
+</script>
+
+</body>
+</html>

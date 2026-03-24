@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Camera</title>
+</head>
+
+<body style="margin:0;background:black;display:flex;justify-content:center;align-items:center;height:100vh;">
+
+<video id="webcam" autoplay style="width:80%;border:3px solid white;"></video>
+
+<script>
+
+const video = document.getElementById("webcam")
+
+navigator.mediaDevices.getUserMedia({video:true})
+.then(stream=>{
+video.srcObject = stream
+})
+
+</script>
+
+
+</body>
+
+</html>
