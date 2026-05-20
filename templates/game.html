@@ -738,30 +738,25 @@ Music
 <video id="camera" autoplay playsinline style="display:none;"></video>
 <canvas id="game"></canvas>
 
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
 <script>
 
-    async function startCamera() {
-    try {
-        const camera = document.getElementById("camera");
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        camera.srcObject = stream;
-        console.log("Camera permission allowed");
-    } catch (error) {
-        alert("Camera permission denied or camera not available");
-        console.log(error);
-    }
+async function startCamera() {
+    const videoElement = document.getElementById("camera");
+
+    const cameraObj = new Camera(videoElement, {
+        onFrame: async () => {
+            await hands.send({ image: videoElement });
+        },
+        width: 640,
+        height: 480
+    });
+
+    cameraObj.start();
 }
-
-const camera = document.getElementById("camera");
-
-navigator.mediaDevices.getUserMedia({ video: true })
-.then(stream => {
-    camera.srcObject = stream;
-    console.log("Camera started");
-})
-.catch(error => {
-    alert("Camera not allowed or not available");
-});
 
 
     function openSettings(){
@@ -833,12 +828,70 @@ let rightTrail = [];
 let isSoundMuted = false;
 let isMusicMuted = false;
 
+
+const hands = new Hands({
+    locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+    }
+});
+
+hands.setOptions({
+    maxNumHands: 2,
+    modelComplexity: 1,
+    minDetectionConfidence: 0.7,
+    minTrackingConfidence: 0.7
+});
+
+hands.onResults(onHandResults);
+
+function onHandResults(results) {
+    if (!playerReady) return;
+
+    if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+
+        results.multiHandLandmarks.forEach((landmarks, index) => {
+
+            let indexFinger = landmarks[8];
+            let thumb = landmarks[4];
+
+            let x = indexFinger.x;
+            let y = indexFinger.y;
+
+            if (index === 0) {
+                leftX = x * canvas.width;
+                leftY = y * canvas.height;
+            }
+
+            if (index === 1) {
+                rightX = x * canvas.width;
+                rightY = y * canvas.height;
+            }
+
+            let dx = indexFinger.x - thumb.x;
+            let dy = indexFinger.y - thumb.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            pinch = distance < 0.05;
+
+            if (waitingStart && pinch && !prevPinch) {
+                waitingStart = false;
+                document.getElementById("controls").style.display = "flex";
+                startGame();
+            }
+
+            prevPinch = pinch;
+        });
+    }
+}
+
+
 /* START PLAYER */
 
 function startPlayer(){
 
 let name=document.getElementById("playerName").value;
 if(name==="") return;
+startCamera();
 
 document.getElementById("playerScreen").style.display="none";
 
@@ -866,7 +919,6 @@ bgm.play().then(()=>{
 /* START GAME */
 
 function startGame(){
-    startCamera();
 
 bgVideo.style.display = "none"; // hide video first
 
@@ -897,40 +949,10 @@ type: Math.random() < redChance ? "danger" : "normal"
 
 /* FETCH GESTURE */
 
+/* FETCH GESTURE - browser camera version */
+
 function fetchGesture(){
-
-if(!playerReady)return;
-
-fetch("/gesture")
-.then(res=>res.json())
-.then(data=>{
-
-pinch=data.pinch;
-
-/* PINCH START */
-
-if(waitingStart && pinch && !prevPinch){
-
-waitingStart=false;
-document.getElementById("controls").style.display = "flex";
-startGame();
-
-}
-
-prevPinch=pinch;
-
-if(data.left !== null){
-    leftX = data.left * canvas.width;
-    leftY = data.leftY * canvas.height;
-}
-
-if(data.right !== null){
-    rightX = data.right * canvas.width;
-    rightY = data.rightY * canvas.height;
-}
-
-});
-
+    // No need to fetch from Python anymore
 }
 
 prevLeftY = leftY;
@@ -1297,7 +1319,7 @@ requestAnimationFrame(draw);
 
 /* START */
 
-setInterval(fetchGesture,30);
+
 
 draw();
 
