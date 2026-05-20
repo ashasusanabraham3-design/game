@@ -735,10 +735,22 @@ Music
 
 </div>
 
-
+<video id="camera" autoplay playsinline style="display:none;"></video>
 <canvas id="game"></canvas>
 
 <script>
+
+const camera = document.getElementById("camera");
+
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => {
+    camera.srcObject = stream;
+    console.log("Camera started");
+})
+.catch(error => {
+    alert("Camera not allowed or not available");
+});
+
 
     function openSettings(){
 document.getElementById("settingsMenu").style.display="block";
@@ -763,6 +775,16 @@ const beepSound = new Audio("/static/sounds/beep.mp3");
 const canvas=document.getElementById("game");
 const ctx=canvas.getContext("2d");
 
+
+const camera = document.getElementById("camera");
+
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => {
+    camera.srcObject = stream;
+})
+.catch(error => {
+    alert("Camera permission denied or camera not available");
+});
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
