@@ -740,6 +740,18 @@ Music
 
 <script>
 
+    async function startCamera() {
+    try {
+        const camera = document.getElementById("camera");
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        camera.srcObject = stream;
+        console.log("Camera permission allowed");
+    } catch (error) {
+        alert("Camera permission denied or camera not available");
+        console.log(error);
+    }
+}
+
 const camera = document.getElementById("camera");
 
 navigator.mediaDevices.getUserMedia({ video: true })
@@ -862,6 +874,7 @@ bgm.play().then(()=>{
 /* START GAME */
 
 function startGame(){
+    startCamera();
 
 bgVideo.style.display = "none"; // hide video first
 
