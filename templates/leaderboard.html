@@ -51,9 +51,15 @@ fetch("/get_scores")
 
     let list = "";
 
-    data.forEach((p, i) => {
-        list += (i+1) + ". " + p.player + " - " + p.score + "<br>";
-    });
+ data.forEach((p, i) => {
+    let badge = "";
+
+    if(i === 0) badge = "🥇 ";
+    if(i === 1) badge = "🥈 ";
+    if(i === 2) badge = "🥉 ";
+
+    list += badge + (i+1) + ". " + p.player + " - " + p.score + "<br>";
+});
 
     document.getElementById("list").innerHTML = list;
 });
