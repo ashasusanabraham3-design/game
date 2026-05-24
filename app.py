@@ -138,17 +138,17 @@ def save_score():
     player = data["player_name"]
     score = data["score"]
     level = data["level"]
+    mode = data["mode"]
 
-
-    print("Saving:", player, score, level)
+    print("Saving:", player, score, level, mode)
 
     conn = get_db()
     cursor = conn.cursor()
 
-    cursor.execute(
-        "INSERT INTO scores (player_name, score, level) VALUES (?, ?, ?)",
-        (player, score, level)
-    )
+    cursor.execute("""
+        INSERT INTO score (player, score, level, mode)
+        VALUES (?, ?, ?, ?)
+    """, (player, score, level, mode))
 
     conn.commit()
     conn.close()
@@ -166,20 +166,20 @@ def get_scores():
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT player_name, score, level FROM scores ORDER BY score DESC LIMIT 10"
+        "SELECT player, score, level, mode FROM score ORDER BY score DESC LIMIT 10"
     )
 
     scores = cursor.fetchall()
-
     conn.close()
 
     result = []
 
     for s in scores:
         result.append({
-            "player": s["player_name"],
+            "player": s["player"],
             "score": s["score"],
-            "level": s["level"]
+            "level": s["level"],
+            "mode": s["mode"]
         })
 
     return jsonify(result)

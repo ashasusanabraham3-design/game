@@ -557,6 +557,28 @@ width:350px;
 margin-bottom:20px;
 }
 
+#modeBox{
+margin-top:20px;
+display:flex;
+gap:15px;
+justify-content:center;
+}
+
+#modeBox button{
+padding:12px 18px;
+font-size:16px;
+border:none;
+border-radius:10px;
+background:#00ffff;
+color:black;
+cursor:pointer;
+box-shadow:0 0 10px #00ffff;
+}
+
+#modeBox button:hover{
+background:white;
+}
+
 </style>
 </head>
 
@@ -571,10 +593,17 @@ margin-bottom:20px;
 <input id="playerName" placeholder="Enter your name">
 <br>
 
+<div id="modeBox">
+    <button onclick="selectMode('classic')">CLASSIC MODE</button>
+    <button onclick="selectMode('timeAttack')">TIME ATTACK</button>
+    <button onclick="selectMode('survival')">SURVIVAL MODE</button>
+</div>
+
 <div id="menuButtons">
 <button id="startBtn" onclick="startPlayer()">START GAME</button>
 <button id="howBtn" onclick="showHowToPlay()">HOW TO PLAY</button>
 </div>
+
 </div>
 
 <div id="howScreen">
@@ -833,7 +862,7 @@ let leftTrail = [];
 let rightTrail = [];
 let isSoundMuted = false;
 let isMusicMuted = false;
-
+let gameMode = "classic";
 
 const hands = new Hands({
     locateFile: (file) => {
@@ -1135,8 +1164,10 @@ if(b.side === "left"){
 
 if(b.type === "danger"){
 
+  if(gameMode !== "classic" && gameMode !== "timeAttack"){
     lives--;
     updateLives();
+}
 
     failSound.currentTime = 0;
   if(!isSoundMuted){
@@ -1346,10 +1377,27 @@ if(timeLeft <= 0){
 gameStarted = false;
 timerStarted = false;
 
-/* STOP VIDEO */
 bgVideo.pause();
 
-startNextLevel();
+if(gameMode === "timeAttack"){
+    saveScore();
+
+    document.getElementById("gameOverScreen").style.display = "flex";
+    bgm.pause();
+    bgm.currentTime = 0;
+
+    let name = document.getElementById("playerName").value;
+    if(name === ""){
+        name = "Player";
+    }
+
+    document.getElementById("finalName").innerText = "Name: " + name;
+    document.getElementById("finalScore").innerText = "Score: " + score;
+    document.getElementById("finalLevel").innerText = "Mode: Time Attack";
+}
+else if(gameMode === "classic"){
+    startNextLevel();
+}
 
 }
 },1000);
@@ -1364,53 +1412,55 @@ function updateLives(){
 document.getElementById("lives").innerText = "❤️".repeat(lives);
 }
 
+
+
 function startNextLevel(){
 
 level++;
 
 document.getElementById("level").innerText = "Level: " + level;
 
-timeLeft = 90;
+if(gameMode === "timeAttack"){
+    timeLeft = 60;
+}
+else if(gameMode === "survival"){
+    timeLeft = 9999;
+}
+else{
+    timeLeft = 90;
+}
+
 blocks = [];
 
-/* STOP GAME */
 gameStarted = false;
 timerStarted = false;
 
-/* COUNTDOWN */
 isCountingDown = true;
 count = 3;
 
 let countdown = setInterval(()=>{
 
-/* 🔊 PLAY ONLY ONCE PER NUMBER */
 if(count !== lastBeep && count >= 0){
-
     lastBeep = count;
-
     beepSound.pause();
     beepSound.currentTime = 0;
     beepSound.play().catch(()=>{});
-
 }
 
-/* ⬇️ decrease */
 count--;
 
-/* 🚀 START GAME */
-
 if(count > 0){
-    playBeep(800, 0.15);   // normal beep
+    playBeep(800, 0.15);
 }
 else if(count === 0){
-    playBeep(1200, 0.3);   // higher pitch = GO!
+    playBeep(1200, 0.3);
 }
+
 if(count < 0){
 
     clearInterval(countdown);
 
     isCountingDown = false;
-
     gameStarted = true;
     timerStarted = true;
 
@@ -1419,12 +1469,15 @@ if(count < 0){
 
     bgm.currentTime = 0;
     if(!isMusicMuted){
-    bgm.play().catch(()=>{});
+        bgm.play().catch(()=>{});
+    }
 }
 
+},1000);
 }
 
-},1000);}
+
+
 function playBeep(){
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1471,11 +1524,12 @@ fetch("/save_score",{
     headers:{
         "Content-Type":"application/json"
     },
-    body: JSON.stringify({
-        player_name: name,
-        score: score,
-        level: level
-    })
+  body: JSON.stringify({
+    player_name: name,
+    score: score,
+    level: level,
+    mode: gameMode
+})
 });
 
 }
@@ -1790,7 +1844,11 @@ function getRank(n){
     return n + "th";
 }
 
+function selectMode(mode){
+    gameMode = mode;
 
+    alert("Selected mode: " + mode);
+}
 
 function goLeaderboard(){
 window.location.href = "/leaderboard";
