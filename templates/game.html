@@ -1211,9 +1211,20 @@ if(name === ""){
 
 document.getElementById("finalName").innerText = "Name: " + name;
 document.getElementById("finalScore").innerText = "Score: " + score;
-document.getElementById("finalLevel").innerText = "Level: " + level;
 document.getElementById("finalScore").innerText = "Score: " + score;
-document.getElementById("finalLevel").innerText = "Level: " + level;
+let modeText = "";
+
+if(gameMode === "classic"){
+    modeText = "Classic Mode";
+}
+else if(gameMode === "timeAttack"){
+    modeText = "Time Attack";
+}
+else if(gameMode === "survival"){
+    modeText = "Survival Mode";
+}
+
+document.getElementById("finalLevel").innerText = "Mode: " + modeText;
 
 }
 
@@ -1369,7 +1380,13 @@ let sec = timeLeft % 60;
 
 if(sec < 10) sec = "0"+sec;
 
-document.getElementById("timer").innerText = min + ":" + sec;
+if(gameMode === "survival"){
+    document.getElementById("timer").innerText = "Survival Mode";
+}
+else{
+    document.getElementById("timer").innerText =
+    Math.floor(timeLeft / 60) + ":" + String(timeLeft % 60).padStart(2, "0");
+}
 
 /* STOP GAME WHEN TIME ENDS */
 if(timeLeft <= 0){
@@ -1424,7 +1441,7 @@ if(gameMode === "timeAttack"){
     timeLeft = 60;
 }
 else if(gameMode === "survival"){
-    timeLeft = 9999;
+    timeLeft = 0;
 }
 else{
     timeLeft = 90;
@@ -1510,7 +1527,6 @@ if(Math.abs(dx) > Math.abs(dy)){
 }
 
 }
-
 function saveScore(){
 
 let name = document.getElementById("playerName").value;
@@ -1524,12 +1540,19 @@ fetch("/save_score",{
     headers:{
         "Content-Type":"application/json"
     },
-  body: JSON.stringify({
-    player_name: name,
-    score: score,
-    level: level,
-    mode: gameMode
+    body: JSON.stringify({
+        player_name: name,
+        score: score,
+        level: level,
+        mode: gameMode
+    })
 })
+.then(res => res.json())
+.then(data => {
+    console.log("Score saved:", data);
+})
+.catch(err => {
+    console.log("Score save error:", err);
 });
 
 }
@@ -1847,7 +1870,11 @@ function getRank(n){
 function selectMode(mode){
     gameMode = mode;
 
-    alert("Selected mode: " + mode);
+    document.querySelectorAll("#modeBox button").forEach(btn => {
+        btn.style.background = "#00ffff";
+    });
+
+    event.target.style.background = "#ffffff";
 }
 
 function goLeaderboard(){
