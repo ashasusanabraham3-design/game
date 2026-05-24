@@ -931,9 +931,12 @@ document.getElementById("playerScreen").style.display="none";
 playerReady=true;
 waitingStart=true;
 
-/* ✅ SHOW LIVES HERE */
-showLives();
-
+if(gameMode === "classic"){
+    hideLives();
+}
+else{
+    showLives();
+}
 /* AUDIO */
 if(!audioUnlocked){
     bgm.play().then(()=>{
@@ -1383,11 +1386,13 @@ if(sec < 10) sec = "0"+sec;
 if(gameMode === "survival"){
     document.getElementById("timer").innerText = "Survival Mode";
 }
+else if(gameMode === "classic"){
+    document.getElementById("timer").innerText = "Classic Mode";
+}
 else{
     document.getElementById("timer").innerText =
     Math.floor(timeLeft / 60) + ":" + String(timeLeft % 60).padStart(2, "0");
 }
-
 /* STOP GAME WHEN TIME ENDS */
 if(timeLeft <= 0){
 
@@ -1441,12 +1446,11 @@ if(gameMode === "timeAttack"){
     timeLeft = 60;
 }
 else if(gameMode === "survival"){
-    timeLeft = 0;
+    timeLeft = 9999;
 }
 else{
-    timeLeft = 90;
+    timeLeft = 9999;
 }
-
 blocks = [];
 
 gameStarted = false;

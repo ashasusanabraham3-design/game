@@ -106,6 +106,24 @@ def get_db():
     conn.row_factory = sqlite3.Row
     return conn
 
+def init_db():
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS score (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            player TEXT,
+            score INTEGER,
+            level INTEGER,
+            mode TEXT
+        )
+    """)
+
+    conn.commit()
+    conn.close()
+
+
 # -------------------------
 # PAGE ROUTES
 # -------------------------
@@ -204,6 +222,6 @@ camera_thread.start()
 # -------------------------
 # RUN SERVER
 # -------------------------
-
+init_db()
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
