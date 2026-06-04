@@ -597,6 +597,7 @@ background:white;
     <button onclick="selectMode('classic')">CLASSIC MODE</button>
     <button onclick="selectMode('timeAttack')">TIME ATTACK</button>
     <button onclick="selectMode('survival')">SURVIVAL MODE</button>
+    <button onclick="selectMode('zen')">ZEN MODE</button>
 </div>
 
 <div id="menuButtons">
@@ -1167,7 +1168,7 @@ if(b.side === "left"){
 
 if(b.type === "danger"){
 
-  if(gameMode !== "classic" && gameMode !== "timeAttack"){
+  if(gameMode === "classic" || gameMode === "survival"){
     lives--;
     updateLives();
 }
@@ -1216,7 +1217,6 @@ document.getElementById("finalName").innerText = "Name: " + name;
 document.getElementById("finalScore").innerText = "Score: " + score;
 document.getElementById("finalScore").innerText = "Score: " + score;
 let modeText = "";
-
 if(gameMode === "classic"){
     modeText = "Classic Mode";
 }
@@ -1225,6 +1225,9 @@ else if(gameMode === "timeAttack"){
 }
 else if(gameMode === "survival"){
     modeText = "Survival Mode";
+}
+else if(gameMode === "zen"){
+    modeText = "Zen Mode";
 }
 
 document.getElementById("finalLevel").innerText = "Mode: " + modeText;
@@ -1386,8 +1389,8 @@ if(sec < 10) sec = "0"+sec;
 if(gameMode === "survival"){
     document.getElementById("timer").innerText = "Survival Mode";
 }
-else if(gameMode === "classic"){
-    document.getElementById("timer").innerText = "Classic Mode";
+else if(gameMode === "zen"){
+    document.getElementById("timer").innerText = "Zen Mode";
 }
 else{
     document.getElementById("timer").innerText =
@@ -1445,10 +1448,13 @@ document.getElementById("level").innerText = "Level: " + level;
 if(gameMode === "timeAttack"){
     timeLeft = 60;
 }
+else if(gameMode === "classic"){
+    timeLeft = 90;
+}
 else if(gameMode === "survival"){
     timeLeft = 9999;
 }
-else{
+else if(gameMode === "zen"){
     timeLeft = 9999;
 }
 blocks = [];
@@ -1564,7 +1570,12 @@ fetch("/save_score",{
 function restartGame(){
 
     
-document.getElementById("lives").style.display = "block";
+if(gameMode === "classic" || gameMode === "survival"){
+    showLives();
+}
+else{
+    hideLives();
+}
 
 console.log("lives shown");
 

@@ -53,7 +53,22 @@ fetch("/get_scores")
 
 data.forEach((p, i) => {
 
-    let text = p.player + " - " + p.score + " - " + p.mode;
+   let modeText = p.mode;
+
+if(modeText === "classic"){
+    modeText = "Classic Mode";
+}
+else if(modeText === "timeAttack"){
+    modeText = "Time Attack";
+}
+else if(modeText === "survival"){
+    modeText = "Survival Mode";
+}
+else if(modeText === "zen"){
+    modeText = "Zen Mode";
+}
+
+let text = p.player + " - " + p.score + " - " + modeText; 
 
     if(i === 0){
         list += "🥇 " + text + "<br>";
