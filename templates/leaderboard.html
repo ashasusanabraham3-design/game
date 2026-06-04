@@ -52,20 +52,22 @@ fetch("/get_scores")
     let list = "";
 
 data.forEach((p, i) => {
-    let rank = i + 1;
 
-    if(rank === 1){
-        list += "🥇 " + p.player + " - " + p.score + "<br>";
+    let text = p.player + " - " + p.score + " - " + p.mode;
+
+    if(i === 0){
+        list += "🥇 " + text + "<br>";
     }
-    else if(rank === 2){
-        list += "🥈 " + p.player + " - " + p.score + "<br>";
+    else if(i === 1){
+        list += "🥈 " + text + "<br>";
     }
-    else if(rank === 3){
-        list += "🥉 " + p.player + " - " + p.score + "<br>";
+    else if(i === 2){
+        list += "🥉 " + text + "<br>";
     }
     else{
-        list += rank + ". " + p.player + " - " + p.score + "<br>";
+        list += (i + 1) + ". " + text + "<br>";
     }
+
 });
 
     document.getElementById("list").innerHTML = list;
