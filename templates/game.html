@@ -933,6 +933,10 @@ document.getElementById("playerScreen").style.display="none";
 playerReady=true;
 waitingStart=true;
 
+document.getElementById("score").style.display = "block";
+document.getElementById("level").style.display = "block";
+document.getElementById("timer").style.display = "block";
+
 if(gameMode === "timeAttack" || gameMode === "zen"){
     hideLives();
 }
@@ -954,12 +958,7 @@ bgm.play().then(()=>{
     bgm.currentTime = 0;
 }).catch(()=>{});
 
-playerReady=true;
-waitingStart=true;
 
-document.getElementById("score").style.display = "block";
-document.getElementById("level").style.display = "block";
-document.getElementById("timer").style.display = "block";
 
 /* START GAME */
 
