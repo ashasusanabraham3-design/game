@@ -338,9 +338,10 @@ top:20px;
 left:90px;   /* 👈 move right */
 color:#00ffff;
 font-size:24px;
+display:none;
 }
-#level{position:absolute;top:20px;left:50%;transform:translateX(-50%);color:yellow;font-size:24px;}
-#timer{position:absolute;top:55px;left:50%;transform:translateX(-50%);color:#00ffcc;font-size:24px;}
+#level{position:absolute;top:20px;left:50%;transform:translateX(-50%);color:yellow;font-size:24px;display:none;}
+#timer{position:absolute;top:55px;left:50%;transform:translateX(-50%);color:#00ffcc;font-size:24px;display:none;}
 #lives{
 display:none;   /* 👈 hidden at start */
 position:absolute;
@@ -952,6 +953,13 @@ bgm.play().then(()=>{
     bgm.pause();
     bgm.currentTime = 0;
 }).catch(()=>{});
+
+playerReady=true;
+waitingStart=true;
+
+document.getElementById("score").style.display = "block";
+document.getElementById("level").style.display = "block";
+document.getElementById("timer").style.display = "block";
 
 /* START GAME */
 
