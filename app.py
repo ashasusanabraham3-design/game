@@ -169,6 +169,9 @@ def save_score():
     """, (player, score, level, mode))
 
     conn.commit()
+
+    print("SAVED SUCCESSFULLY")
+
     conn.close()
 
     return jsonify({"status":"score saved"})
