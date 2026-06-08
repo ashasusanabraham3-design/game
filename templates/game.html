@@ -680,13 +680,17 @@ async function startCamera() {
     cameraObj.start();
 }
 
+function openSettings(){
 
-    function openSettings(){
+document.getElementById("howScreen").style.display="none";
+
 document.getElementById("settingsMenu").style.display="block";
-}
 
+}
 function closeSettings(){
+
 document.getElementById("settingsMenu").style.display="none";
+
 }
 
     const NEON_BLUE = "#00f5ff";   // cyan glow
@@ -1500,8 +1504,11 @@ document.getElementById("howScreen").style.display = "block";
 }
 
 function backToMenu(){
-document.getElementById("howScreen").style.display = "none";
-document.getElementById("playerScreen").style.display = "block";
+
+document.getElementById("howScreen").style.display="none";
+
+document.getElementById("playerScreen").style.display="block";
+
 }
 
 function draw3DBox(x, y, size, color){
