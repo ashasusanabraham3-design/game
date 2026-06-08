@@ -437,6 +437,14 @@ box-shadow:0 0 10px #00ffff;
 background:white;
 }
 
+.audioSettings{
+display:flex;
+justify-content:center;
+gap:40px;
+font-size:18px;
+margin:20px 0;
+}
+
 </style>
 </head>
 
@@ -618,6 +626,7 @@ Selected Mode: Classic
 
 <div class="settingRow">   <!-- 👈 ADD THIS -->
 
+<div class="audioSettings"></div>
 <label>
 <input type="checkbox" id="muteSound" checked>
 Sound Effects
@@ -626,6 +635,9 @@ Sound Effects
 <label>
 <input type="checkbox" id="muteMusic" checked>
 Music
+</label>
+
+</div>
 
 <button onclick="selectMode('classic')">
 🎮 Classic Mode
