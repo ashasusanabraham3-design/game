@@ -1497,17 +1497,19 @@ startNextLevel();
 }
 document.querySelector(".btn").innerText = isPaused ? "▶" : "⏸";
 
-
 function showHowToPlay(){
-document.getElementById("playerScreen").style.display = "none";
+
+document.getElementById("settingsMenu").style.display = "none";
+
 document.getElementById("howScreen").style.display = "block";
+
 }
 
 function backToMenu(){
 
-document.getElementById("howScreen").style.display="none";
+document.getElementById("howScreen").style.display = "none";
 
-document.getElementById("playerScreen").style.display="block";
+document.getElementById("playerScreen").style.display = "block";
 
 }
 
@@ -1714,7 +1716,11 @@ oscillator.stop(audioCtx.currentTime + duration);
 
 }
 function openSettings(){
-    document.getElementById("settingsMenu").style.display="block";
+
+document.getElementById("howScreen").style.display = "none";
+
+document.getElementById("settingsMenu").style.display = "block";
+
 }
 
 document.getElementById("muteSound").onchange = function(){
