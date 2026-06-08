@@ -625,6 +625,10 @@ Music
 
 </div>   <!-- 👈 ADD THIS -->
 
+<button onclick="showModes()">🎮 Modes</button>
+
+<button onclick="showHowToPlay()">❓ How To Play</button>
+
 <button onclick="closeSettings()">Close</button>
 
 </div>
@@ -1765,6 +1769,15 @@ function getBadge(rank){
     if(rank === 2) return "🥈";
     if(rank === 3) return "🥉";
     return "";
+}
+
+function showModes(){
+    alert(
+        "Classic Mode\n\n" +
+        "Time Attack\n\n" +
+        "Survival Mode\n\n" +
+        "Zen Mode"
+    );
 }
 
 </script>
