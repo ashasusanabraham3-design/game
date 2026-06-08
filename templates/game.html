@@ -20,7 +20,8 @@ position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-
+width:900px;
+max-width:90%;
 background:black;
 padding:30px;
 border-radius:15px;
@@ -450,6 +451,14 @@ display:flex;
 align-items:center;
 gap:8px;
 }
+
+.modeButtons{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+margin-top:20px;
+}
 </style>
 </head>
 
@@ -629,7 +638,7 @@ cursor:pointer;
 Selected Mode: Classic
 </p>
 
-<div class="settingRow">   <!-- 👈 ADD THIS -->
+
 
 <div class="audioSettings">
 
@@ -644,6 +653,8 @@ Music
 </label>
 
 </div>
+
+<div class="modeButtons">
 
 <button onclick="selectMode('classic')">
 🎮 Classic Mode
@@ -660,6 +671,8 @@ Music
 <button onclick="selectMode('zen')">
 🧘 Zen Mode
 </button>
+
+</div>
 
 <button onclick="showHowToPlay()">
 ❓ How To Play
