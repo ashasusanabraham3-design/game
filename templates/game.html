@@ -849,7 +849,7 @@ if(name==="") return;
 startCamera();
 
 document.getElementById("playerScreen").style.display="none";
-
+document.getElementById("settingsBtn").style.display = "none";
 playerReady=true;
 waitingStart=true;
 
@@ -1357,6 +1357,7 @@ else if(gameMode === "classic"){
 function goHome(){
     document.getElementById("lives").style.display = "none";
     hideLives();
+    document.getElementById("settingsBtn").style.display = "flex";
 location.reload();
 }
 
