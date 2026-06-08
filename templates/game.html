@@ -495,6 +495,44 @@ background:white;
 <button onclick="backToMenu()">⬅ Back</button>
 
 </div>
+<div id="modesScreen" style="
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+color:white;
+display:none;
+">
+
+<h1 style="color:#00ffff;">GAME MODES</h1>
+
+<p>🎮 CLASSIC MODE</p>
+<p>• 1:30 timer</p>
+<p>• 3 lives</p>
+
+<br>
+
+<p>⏱ TIME ATTACK</p>
+<p>• 1 minute</p>
+<p>• Get highest score</p>
+
+<br>
+
+<p>❤️ SURVIVAL MODE</p>
+<p>• No timer</p>
+<p>• Play until lives are gone</p>
+
+<br>
+
+<p>🧘 ZEN MODE</p>
+<p>• Practice mode</p>
+<p>• No timer</p>
+<p>• No lives</p>
+
+<button onclick="backFromModes()">⬅ Back</button>
+
+</div>
 
 <button id="settingsBtn" onclick="openSettings()">⚙</button>
 
@@ -1772,12 +1810,18 @@ function getBadge(rank){
 }
 
 function showModes(){
-    alert(
-        "Classic Mode\n\n" +
-        "Time Attack\n\n" +
-        "Survival Mode\n\n" +
-        "Zen Mode"
-    );
+
+document.getElementById("settingsMenu").style.display="none";
+document.getElementById("playerScreen").style.display="none";
+document.getElementById("modesScreen").style.display="block";
+
+}
+
+function backFromModes(){
+
+document.getElementById("modesScreen").style.display="none";
+document.getElementById("playerScreen").style.display="block";
+
 }
 
 </script>
