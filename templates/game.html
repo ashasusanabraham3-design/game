@@ -492,44 +492,8 @@ background:white;
 <button onclick="backToMenu()">⬅ Back</button>
 
 </div>
-<div id="modesScreen" style="
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-text-align:center;
-color:white;
-display:none;
-">
 
-<h1 style="color:#00ffff;">GAME MODES</h1>
-
-<p>🎮 CLASSIC MODE</p>
-<p>• 1:30 timer</p>
-<p>• 3 lives</p>
-
-<br>
-
-<p>⏱ TIME ATTACK</p>
-<p>• 1 minute</p>
-<p>• Get highest score</p>
-
-<br>
-
-<p>❤️ SURVIVAL MODE</p>
-<p>• No timer</p>
-<p>• Play until lives are gone</p>
-
-<br>
-
-<p>🧘 ZEN MODE</p>
-<p>• Practice mode</p>
-<p>• No timer</p>
-<p>• No lives</p>
-
-<button onclick="backFromModes()">⬅ Back</button>
-
-</div>
+  
 
 <button id="settingsBtn" onclick="openSettings()">⚙</button>
 
@@ -579,6 +543,8 @@ z-index:20;
 <div id="pausePopup">
 
 <h2>SETTINGS</h2>
+
+<h2>PAUSED</h2>
 
 <button class="popupBtn" onclick="restartGame()">🔄 Restart</button>
 <button class="popupBtn" onclick="goHome()">🏠 Home</button>
@@ -646,6 +612,10 @@ cursor:pointer;
 
 <h2>SETTINGS</h2>
 
+<p id="currentMode" style="color:#00ffff;font-size:20px;">
+Selected Mode: Classic
+</p>
+
 <div class="settingRow">   <!-- 👈 ADD THIS -->
 
 <label>
@@ -656,15 +626,34 @@ Sound Effects
 <label>
 <input type="checkbox" id="muteMusic" checked>
 Music
+
+<button onclick="selectMode('classic')">
+🎮 Classic Mode
+</button>
+
+<button onclick="selectMode('timeAttack')">
+⏱ Time Attack
+</button>
+
+<button onclick="selectMode('survival')">
+❤️ Survival Mode
+</button>
+
+<button onclick="selectMode('zen')">
+🧘 Zen Mode
+</button>
+
+<button onclick="showHowToPlay()">
+❓ How To Play
+</button>
+
+<button onclick="closeSettings()">
+Close
+</button>
+
 </label>
 
 </div>   <!-- 👈 ADD THIS -->
-
-<button onclick="showModes()">🎮 Modes</button>
-
-<button onclick="showHowToPlay()">❓ How To Play</button>
-
-<button onclick="closeSettings()">Close</button>
 
 </div>
 
@@ -1786,15 +1775,29 @@ function getRank(n){
 }
 
 function selectMode(mode){
-    gameMode = mode;
 
-    document.querySelectorAll("#modeBox button").forEach(btn => {
-        btn.style.background = "#00ffff";
-    });
+gameMode = mode;
 
-    event.target.style.background = "#ffffff";
+let modeName = "";
+
+if(mode === "classic"){
+    modeName = "Classic";
+}
+else if(mode === "timeAttack"){
+    modeName = "Time Attack";
+}
+else if(mode === "survival"){
+    modeName = "Survival";
+}
+else if(mode === "zen"){
+    modeName = "Zen";
 }
 
+document.getElementById("currentMode").innerText =
+"Selected Mode: " + modeName;
+
+closeSettings();
+}
 function goLeaderboard(){
 window.location.href = "/leaderboard";
 }
@@ -1806,20 +1809,7 @@ function getBadge(rank){
     return "";
 }
 
-function showModes(){
 
-document.getElementById("settingsMenu").style.display="none";
-document.getElementById("playerScreen").style.display="none";
-document.getElementById("modesScreen").style.display="block";
-
-}
-
-function backFromModes(){
-
-document.getElementById("modesScreen").style.display="none";
-document.getElementById("playerScreen").style.display="block";
-
-}
 
 </script>
 
