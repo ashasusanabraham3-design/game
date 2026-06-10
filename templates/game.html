@@ -441,9 +441,8 @@ background:white;
 .audioSettings{
 display:flex;
 justify-content:center;
-gap:40px;
-font-size:18px;
-margin:20px 0;
+gap:60px;
+margin-bottom:25px;
 }
 
 .audioSettings label{
@@ -453,11 +452,19 @@ gap:8px;
 }
 
 .modeButtons{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
+display:grid;
+grid-template-columns:1fr 1fr;
 gap:15px;
 margin-top:20px;
+max-width:500px;
+margin-left:auto;
+margin-right:auto;
+}
+
+.modeButtons button{
+width:220px;
+height:55px;
+font-size:18px;
 }
 
 .toggleRow{
@@ -471,8 +478,8 @@ color:white;
 }
 
 .toggleRow button{
-width:100px;
-height:45px;
+width:80px;
+height:40px;
 border:none;
 border-radius:25px;
 background:#00ffff;
@@ -484,6 +491,12 @@ cursor:pointer;
 box-shadow:
 0 0 10px #00ffff,
 0 0 20px #00ffff;
+}
+
+#currentMode{
+margin-bottom:25px;
+font-size:22px;
+font-weight:bold;
 }
 
 </style>
@@ -661,7 +674,7 @@ cursor:pointer;
 
 <h2>SETTINGS</h2>
 
-<p id="currentMode" style="color:#00ffff;font-size:20px;">
+<p id="currentMode" style="color:#00ffff;font-size:20px ;">
 Selected Mode: Classic
 </p>
 
