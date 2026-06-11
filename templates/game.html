@@ -608,6 +608,51 @@ align-items:center;
 z-index:10;
 ">
 
+
+
+<h1 class="neonText" style="font-size:70px;">GAME OVER</h1>
+
+<p id="finalName" class="resultText"></p>
+<p id="finalScore" class="resultText"></p>
+<p id="finalLevel" class="resultText"></p>
+
+<div id="leaderboardBox" style="
+margin-top:20px;
+text-align:center;
+color:white;
+font-size:18px;
+">
+<h3 style="color:#00ffff;">🏆 TOP 10 PLAYERS</h3>
+<div id="leaderboardList"></div>
+</div>
+
+<button onclick="restartGame()" style="
+padding:15px 30px;
+font-size:20px;
+margin-top:20px;
+background:#00ffff;
+border:none;
+border-radius:10px;
+cursor:pointer;
+">
+Restart
+</button>
+
+<button onclick="goLeaderboard()" style="
+padding:15px 30px;
+font-size:20px;
+margin-top:10px;
+background:gold;
+border:none;
+border-radius:10px;
+cursor:pointer;
+">
+🏆 Leaderboard
+</button>
+
+
+</div>
+
 <div id="pauseMenu" style="
 position:absolute;
 top:0;
@@ -663,51 +708,6 @@ ON
 </div>
 
 </div>
-
-<h1 class="neonText" style="font-size:70px;">GAME OVER</h1>
-
-<p id="finalName" class="resultText"></p>
-<p id="finalScore" class="resultText"></p>
-<p id="finalLevel" class="resultText"></p>
-
-<div id="leaderboardBox" style="
-margin-top:20px;
-text-align:center;
-color:white;
-font-size:18px;
-">
-<h3 style="color:#00ffff;">🏆 TOP 10 PLAYERS</h3>
-<div id="leaderboardList"></div>
-</div>
-
-<button onclick="restartGame()" style="
-padding:15px 30px;
-font-size:20px;
-margin-top:20px;
-background:#00ffff;
-border:none;
-border-radius:10px;
-cursor:pointer;
-">
-Restart
-</button>
-
-<button onclick="goLeaderboard()" style="
-padding:15px 30px;
-font-size:20px;
-margin-top:10px;
-background:gold;
-border:none;
-border-radius:10px;
-cursor:pointer;
-">
-🏆 Leaderboard
-</button>
-
-
-</div>
-
-
 
 <div id="controls">
 
@@ -1025,7 +1025,7 @@ function togglePause(){
 isPaused = !isPaused;   // ✅ FIRST flip state
 
 let btn = document.getElementById("pauseBtn");
-let popup = document.getElementById("pausePopup");
+let popup = document.getElementById("pauseMenu");
 let overlay = document.getElementById("overlay");
 
 if(isPaused){
