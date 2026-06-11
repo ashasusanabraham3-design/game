@@ -1429,8 +1429,18 @@ function startNextLevel(){
 
 level++;
 
-document.getElementById("level").innerText = "Level: " + level;
-
+if(gameMode === "classic"){
+  if(gameMode === "classic"){
+    document.getElementById("level").style.display = "block";
+}
+else{
+    document.getElementById("level").style.display = "none";
+}
+    document.getElementById("level").innerText = "Level: " + level;
+}
+else{
+    document.getElementById("level").style.display = "none";
+}
 if(gameMode === "timeAttack"){
     timeLeft = 60;
 }
