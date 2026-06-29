@@ -533,24 +533,56 @@ left:50%;
 
 transform:translate(-50%,-50%);
 
-width:90%;
-max-width:700px;
+width:95%;
+max-width:1200px;
 
 text-align:center;
 
-color:white;
-
 display:none;
+
+color:white;
 
 }
 
 #modeScreen h1{
 
+font-size:65px;
+
 color:#00ffff;
 
-font-size:52px;
-
 margin-bottom:10px;
+
+}
+
+#modeScreen button{
+
+margin-top:40px;
+
+padding:15px 45px;
+
+font-size:24px;
+
+border:none;
+
+border-radius:15px;
+
+background:#00eaff;
+
+color:black;
+
+font-weight:bold;
+
+cursor:pointer;
+
+box-shadow:0 0 20px cyan;
+
+transition:.3s;
+
+}
+
+#modeScreen button:hover{
+
+transform:scale(1.05);
 
 }
 
@@ -566,48 +598,125 @@ color:#cccccc;
 
 .modeCard{
 
-background:rgba(0,0,0,0.75);
+background:rgba(0,0,0,0.80);
 
 border:2px solid #00ffff;
 
-border-radius:18px;
+border-radius:20px;
 
-padding:18px;
-
-margin:18px auto;
-
-width:85%;
+padding:25px;
 
 cursor:pointer;
 
-transition:0.3s;
+transition:.3s;
 
 box-shadow:0 0 15px #00ffff;
 
+min-height:220px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+/* CLASSIC */
+.classic{
+border:2px solid #00ff66;
+box-shadow:0 0 15px #00ff66;
+}
+
+.classic h2{
+color:#00ff66;
+}
+
+.classic:hover{
+box-shadow:0 0 25px #00ff66,0 0 45px #00ff66;
+}
+
+/* TIME ATTACK */
+.timeAttack{
+border:2px solid #00bfff;
+box-shadow:0 0 15px #00bfff;
+}
+
+.timeAttack h2{
+color:#00bfff;
+}
+
+.timeAttack:hover{
+box-shadow:0 0 25px #00bfff,0 0 45px #00bfff;
+}
+
+/* SURVIVAL */
+.survival{
+border:2px solid #ff3b7a;
+box-shadow:0 0 15px #ff3b7a;
+}
+
+.survival h2{
+color:#ff3b7a;
+}
+
+.survival:hover{
+box-shadow:0 0 25px #ff3b7a,0 0 45px #ff3b7a;
+}
+
+/* ZEN */
+.zen{
+border:2px solid #ffd700;
+box-shadow:0 0 15px #ffd700;
+}
+
+.zen h2{
+color:#ffd700;
+}
+
+.zen:hover{
+box-shadow:0 0 25px #e4d165,0 0 45px #ffd700;
 }
 
 .modeCard:hover{
 
-transform:scale(1.03);
+transform:translateY(-8px) scale(1.03);
 
 box-shadow:
-0 0 25px #00ffff;
+0 0 25px #00ffff,
+0 0 45px #00ffff;
 
 }
+
+
 
 .modeCard h2{
 
+font-size:34px;
+
 color:#00ffff;
 
-margin-bottom:10px;
+margin-bottom:20px;
 
 }
-
 .modeCard p{
 
-margin:4px;
+font-size:22px;
 
-font-size:17px;
+margin:8px;
+
+}
+.modeGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:30px;
+
+margin-top:40px;
 
 }
 
@@ -850,25 +959,7 @@ ON
 
 </div>
 
-<div class="modeButtons">
 
-<button onclick="selectMode('classic')">
-🎮 Classic Mode
-</button>
-
-<button onclick="selectMode('timeAttack')">
-⏱ Time Attack
-</button>
-
-<button onclick="selectMode('survival')">
-❤️ Survival Mode
-</button>
-
-<button onclick="selectMode('zen')">
-🧘 Zen Mode
-</button>
-
-</div>
 
 <button onclick="showHowToPlay()">
 ❓ How To Play
@@ -889,33 +980,32 @@ Close
 <p class="modeSubtitle">
 Choose your preferred game mode
 </p>
-
-<div class="modeCard" onclick="selectMode('classic')">
+<div class="modeGrid">
+<div class="modeCard classic" onclick="selectMode('classic')">
 <h2>🎮 CLASSIC MODE</h2>
 <p>⏱ 1 Minute 30 Seconds</p>
 <p>❤️ 3 Lives</p>
 </div>
-
-<div class="modeCard" onclick="selectMode('timeAttack')">
+<div class="modeCard timeAttack" onclick="selectMode('timeAttack')">
 <h2>⏱ TIME ATTACK</h2>
 <p>⏱ 1 Minute</p>
 <p>🏆 Highest Score Wins</p>
 </div>
 
-<div class="modeCard" onclick="selectMode('survival')">
+<div class="modeCard survival" onclick="selectMode('survival')">
 <h2>❤️ SURVIVAL MODE</h2>
 <p>♾ No Time Limit</p>
 <p>❤️ 3 Lives</p>
 </div>
 
-<div class="modeCard" onclick="selectMode('zen')">
+<div class="modeCard zen" onclick="selectMode('zen')">
 <h2>🧘 ZEN MODE</h2>
 <p>🎯 Practice Mode</p>
 <p>🚫 No Timer • No Lives</p>
 </div>
 
 <button onclick="backFromMode()">⬅ Back</button>
-
+</div>
 </div>   <!-- 👈 ADD THIS -->
 
 
@@ -941,15 +1031,6 @@ async function startCamera() {
     });
 
     cameraObj.start();
-}
-
-function openSettings(){
-
-    document.getElementById("playerScreen").style.display = "none";
-    document.getElementById("howScreen").style.display = "none";
-    document.getElementById("settingsMenu").style.display = "none";
-
-    document.getElementById("modeScreen").style.display = "block";
 }
 
 function closeSettings(){
