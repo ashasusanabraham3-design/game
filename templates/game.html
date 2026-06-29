@@ -629,7 +629,7 @@ font-size:17px;
 </div>
 
 <div id="menuButtons">
-<button id="startBtn" onclick="startPlayer()">START GAME</button>
+<button id="startBtn" onclick="showModeScreen()">START GAME</button>
 
 </div>
 
@@ -914,7 +914,7 @@ Choose your preferred game mode
 <p>🚫 No Timer • No Lives</p>
 </div>
 
-<button onclick="backToMenu()">⬅ Back</button>
+<button onclick="backFromMode()">⬅ Back</button>
 
 </div>   <!-- 👈 ADD THIS -->
 
@@ -1073,6 +1073,16 @@ function onHandResults(results) {
     }
 }
 
+
+function showModeScreen(){
+
+    // Hide home screen
+    document.getElementById("playerScreen").style.display = "none";
+
+    // Show mode selection
+    document.getElementById("modeScreen").style.display = "block";
+
+}
 
 /* START PLAYER */
 
@@ -2048,8 +2058,11 @@ else if(mode === "zen"){
 document.getElementById("currentMode").innerText =
 "Selected Mode: " + modeName;
 
-closeSettings();
+document.getElementById("modeScreen").style.display = "none";
+
+startPlayer();
 }
+
 function goLeaderboard(){
 window.location.href = "/leaderboard";
 }
@@ -2150,7 +2163,13 @@ else{
 
 }
 
+function backFromMode(){
 
+    document.getElementById("modeScreen").style.display = "none";
+
+    document.getElementById("playerScreen").style.display = "flex";
+
+}
 
 
 </script>
