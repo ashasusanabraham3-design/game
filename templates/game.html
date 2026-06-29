@@ -878,6 +878,10 @@ ON
 Close
 </button>
 
+
+
+</div>
+
 <div id="modeScreen" style="display:none;">
 
 <h1>SELECT GAME MODE</h1>
@@ -912,11 +916,9 @@ Choose your preferred game mode
 
 <button onclick="backToMenu()">⬅ Back</button>
 
-</div>
-
 </div>   <!-- 👈 ADD THIS -->
 
-</div>
+
 
 <video id="camera" autoplay playsinline style="display:none;"></video>
 <canvas id="game"></canvas>
@@ -943,11 +945,13 @@ async function startCamera() {
 
 function openSettings(){
 
-document.getElementById("howScreen").style.display="none";
+    document.getElementById("playerScreen").style.display = "none";
+    document.getElementById("howScreen").style.display = "none";
+    document.getElementById("settingsMenu").style.display = "none";
 
-document.getElementById("settingsMenu").style.display="block";
-
+    document.getElementById("modeScreen").style.display = "block";
 }
+
 function closeSettings(){
 
 document.getElementById("settingsMenu").style.display="none";
@@ -2146,11 +2150,6 @@ else{
 
 }
 
-function selectMode(mode){
-
-alert("Selected Mode : " + mode);
-
-}
 
 
 
