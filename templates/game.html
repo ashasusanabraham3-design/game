@@ -524,6 +524,93 @@ font-size:22px;
 font-weight:bold;
 }
 
+#modeScreen{
+
+position:absolute;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+width:90%;
+max-width:700px;
+
+text-align:center;
+
+color:white;
+
+display:none;
+
+}
+
+#modeScreen h1{
+
+color:#00ffff;
+
+font-size:52px;
+
+margin-bottom:10px;
+
+}
+
+.modeSubtitle{
+
+font-size:18px;
+
+margin-bottom:30px;
+
+color:#cccccc;
+
+}
+
+.modeCard{
+
+background:rgba(0,0,0,0.75);
+
+border:2px solid #00ffff;
+
+border-radius:18px;
+
+padding:18px;
+
+margin:18px auto;
+
+width:85%;
+
+cursor:pointer;
+
+transition:0.3s;
+
+box-shadow:0 0 15px #00ffff;
+
+}
+
+.modeCard:hover{
+
+transform:scale(1.03);
+
+box-shadow:
+0 0 25px #00ffff;
+
+}
+
+.modeCard h2{
+
+color:#00ffff;
+
+margin-bottom:10px;
+
+}
+
+.modeCard p{
+
+margin:4px;
+
+font-size:17px;
+
+}
+
 </style>
 </head>
 
@@ -791,7 +878,41 @@ ON
 Close
 </button>
 
+<div id="modeScreen" style="display:none;">
 
+<h1>SELECT GAME MODE</h1>
+
+<p class="modeSubtitle">
+Choose your preferred game mode
+</p>
+
+<div class="modeCard" onclick="selectMode('classic')">
+<h2>🎮 CLASSIC MODE</h2>
+<p>⏱ 1 Minute 30 Seconds</p>
+<p>❤️ 3 Lives</p>
+</div>
+
+<div class="modeCard" onclick="selectMode('timeAttack')">
+<h2>⏱ TIME ATTACK</h2>
+<p>⏱ 1 Minute</p>
+<p>🏆 Highest Score Wins</p>
+</div>
+
+<div class="modeCard" onclick="selectMode('survival')">
+<h2>❤️ SURVIVAL MODE</h2>
+<p>♾ No Time Limit</p>
+<p>❤️ 3 Lives</p>
+</div>
+
+<div class="modeCard" onclick="selectMode('zen')">
+<h2>🧘 ZEN MODE</h2>
+<p>🎯 Practice Mode</p>
+<p>🚫 No Timer • No Lives</p>
+</div>
+
+<button onclick="backToMenu()">⬅ Back</button>
+
+</div>
 
 </div>   <!-- 👈 ADD THIS -->
 
@@ -2024,6 +2145,14 @@ else{
 }
 
 }
+
+function selectMode(mode){
+
+alert("Selected Mode : " + mode);
+
+}
+
+document.getElementById("modeScreen").style.display = "block";
 
 </script>
 
