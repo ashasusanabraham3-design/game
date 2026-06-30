@@ -1870,7 +1870,25 @@ console.log("lives shown");
 score = 0;
 level = 0;
 lives = 3;
-timeLeft = 90;
+score = 0;
+level = 0;
+lives = 3;
+
+if(gameMode === "classic"){
+
+    timeLeft = 90;
+
+}
+else if(gameMode === "timeAttack"){
+
+    timeLeft = 60;
+
+}
+else{
+
+    timeLeft = 9999;
+
+}
 blocks = [];
 particles = [];
 
