@@ -2168,6 +2168,24 @@ function selectMode(mode){
 
 gameMode = mode;
 
+if (gameMode === "classic") {
+
+    timeLeft = 90;
+
+}
+else if (gameMode === "timeAttack") {
+
+    timeLeft = 60;
+
+}
+else {
+
+    timeLeft = 9999;
+
+}
+
+updateTimerDisplay();
+
 let modeName = "";
 
 if(mode === "classic"){
