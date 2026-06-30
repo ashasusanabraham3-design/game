@@ -1173,9 +1173,9 @@ document.getElementById("settingsBtn").style.display = "none";
 playerReady=true;
 waitingStart=true;
 
-document.getElementById("score").style.display = "block";
-document.getElementById("level").style.display = "block";
-document.getElementById("timer").style.display = "block";
+document.getElementById("score").style.display = "none";
+document.getElementById("level").style.display = "none";
+document.getElementById("timer").style.display = "none";
 
 if(gameMode === "timeAttack" || gameMode === "zen"){
     hideLives();
@@ -1204,30 +1204,64 @@ bgm.play().then(()=>{
 
 function startGame(){
 
-bgVideo.style.display = "none"; // hide video first
+    // Show HUD only after pinch
+    document.getElementById("score").style.display = "block";
 
-startNextLevel();  // 👈 THIS starts countdown
+    if(gameMode === "classic"){
+        document.getElementById("level").style.display = "block";
+        document.getElementById("timer").style.display = "block";
+    }
+
+    else if(gameMode === "timeAttack"){
+        document.getElementById("level").style.display = "none";
+        document.getElementById("timer").style.display = "block";
+    }
+
+    else if(gameMode === "survival"){
+        document.getElementById("level").style.display = "none";
+        document.getElementById("timer").style.display = "none";
+    }
+
+    else if(gameMode === "zen"){
+        document.getElementById("level").style.display = "none";
+        document.getElementById("timer").style.display = "none";
+    }
+
+    bgVideo.style.display = "none";
+
+    startNextLevel();
 
 }
-
 /* SPAWN BLOCK */
 
 function spawnBlock(){
 
-/* RED PROBABILITY BASED ON LEVEL */
-let redChance = Math.min(0.05 + level * 0.005, 0.25);
-// level 1 → 10%
-// level 10 → 20%
-// level 50 → max 50%
+    let redChance = Math.min(0.05 + level * 0.005, 0.25);
 
-blocks.push({
+    let blockType;
 
-side: Math.random()>0.5 ? "left":"right",
-direction: directions[Math.floor(Math.random()*4)],
-progress: 0,
-type: Math.random() < redChance ? "danger" : "normal"
+    // ❌ No red blocks in Time Attack
+    if(gameMode === "timeAttack"){
 
-});
+        blockType = "normal";
+
+    }
+
+    // ✅ Classic, Survival and Zen can have red blocks
+    else{
+
+        blockType = Math.random() < redChance ? "danger" : "normal";
+
+    }
+
+    blocks.push({
+
+        side: Math.random() > 0.5 ? "left" : "right",
+        direction: directions[Math.floor(Math.random()*4)],
+        progress: 0,
+        type: blockType
+
+    });
 
 }
 
